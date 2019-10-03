@@ -9,7 +9,10 @@ var connection = mysql.createConnection({
   password: "password",
   database: "bamazon"
 });
-
+connection.connect(function (err) {
+  if (err) throw err;
+  main();
+})
 function main() {
   inquirer
   .prompt([
@@ -21,7 +24,7 @@ function main() {
   ])
   .then(function(response){
     if (response.start){
-      purchaseList();
+      chooseItem();
     }
     else {
       console.log("See you next time!")
@@ -30,12 +33,7 @@ function main() {
   })
 }
 
-function purchaseList () {
-connection.connect(function (err) {
-  if (err) throw err;
-  chooseItem();
-});
-}
+
 
 function chooseItem() {
   connection.query("SELECT * FROM products", function (error, results) {
@@ -119,4 +117,3 @@ function fulfillPurchase(num, quantity, price) {
     }
   );
 }
-main()
