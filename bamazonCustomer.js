@@ -97,7 +97,7 @@ function purchase(id) {
               newQuantity = results[i].stock_quantity - quantity;
               price = quantity * results[i].price;
               console.log("Your total purchase is $" + price)
-              fulfillPurchase(id, newQuantity)
+              fulfillPurchase(id, newQuantity, price)
             }
           }
         }
@@ -110,8 +110,8 @@ function purchase(id) {
     })
 }
 
-function fulfillPurchase(num, quantity) {
-  connection.query("UPDATE products SET stock_quantity = ? WHERE item_id = ?", [quantity, num],
+function fulfillPurchase(num, quantity, price) {
+  connection.query("UPDATE products SET stock_quantity = ?, product_sales = ? WHERE item_id = ?", [quantity, price, num],
     function (err, res) {
       if (err) throw err;
       console.log("Quantity updated\n")

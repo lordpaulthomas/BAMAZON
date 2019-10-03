@@ -19,6 +19,7 @@
   "homepage": "https://github.com/lordpaulthomas/BAMAZON#readme",
   "dependencies": {
     "colors": "^1.4.0",
+    "console.table": "^0.10.0",
     "inquirer": "^7.0.0",
     "mysql": "^2.17.1"
   }

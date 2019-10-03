@@ -1,6 +1,7 @@
 //List a set of menu options:
 var mysql = require('mysql');
 var inquirer = require('inquirer')
+var cTable = require('console.table')
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -10,7 +11,7 @@ var connection = mysql.createConnection({
   database: "bamazon"
 });
 
-function mainMenu() {
+function mainMenu()  {
   inquirer
     .prompt([
       {
@@ -51,12 +52,13 @@ function viewProducts() {
   connection.query("SELECT item_id, product_name, price, stock_quantity FROM products",
     function (err, results) {
       if (err) throw err;
-      for (let i = 0; i < results.length; i++) {
-        console.log("------------------------------------------------");
+      console.table("Products For Sale", results)
+      // for (let i = 0; i < results.length; i++) {
+        // console.log("------------------------------------------------");
 
-        console.log(results[i].item_id + " | " + results[i].product_name + " | Price: $" + results[i].price + " | Amount: " + results[i].stock_quantity + " |")
-      }
-      console.log("------------------------------------------------")
+        // console.log(results[i].item_id + " | " + results[i].product_name + " | Price: $" + results[i].price + " | Amount: " + results[i].stock_quantity + " |")
+      // }
+      // console.log("------------------------------------------------")
       mainMenu();
     })
 }
@@ -69,12 +71,7 @@ function lowInventory() {
   connection.query(" SELECT item_id, product_name, price, stock_quantity FROM products WHERE stock_quantity < 3",
     function (err, results) {
       if (err) throw err;
-      for (let i = 0; i < results.length; i++) {
-        console.log("------------------------------------------------");
-
-        console.log(results[i].item_id + " | " + results[i].product_name + " | Price: $" + results[i].price + " | Amount: " + results[i].stock_quantity + " |")
-      }
-      console.log("------------------------------------------------")
+     console.table("Low Inventory Items", results)
       mainMenu();
     })
 }
@@ -123,7 +120,7 @@ function addInventory() {
                 }
               ], 
                 function (err, res) {
-                  console.log(res)
+                  console.log(res.message)
                 if (err) throw err;
                 console.log("Product quantitiy successfully updated to " + amount + "\n" + res.message);
                 mainMenu();
