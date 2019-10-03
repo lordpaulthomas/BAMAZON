@@ -150,7 +150,7 @@ function addProduct () {
     },
     {
       type: "input",
-      message: "What department does this product belong in",
+      message: "What department does this product belong in?",
       name: "department"
     },
     {
@@ -165,19 +165,19 @@ function addProduct () {
     }
   ])
   .then(function(response){
-    console.log(response.productname, response.department, response.price, response.quantity)
       connection.query(
         "INSERT INTO products SET ?",
         {
           product_name: response.productname,
           department_name: response.department,
           price: response.price,
-          stock_quantity: response.quantity
+          stock_quantity: response.quantity,
+          product_sales: 0
         },
         function(err, res){
           if(err) throw err;
-          console.log(res)
           console.log("Product successfully added to inventory")
+          console.log(res.affectedRows + " rows affected")
           mainMenu()
         }
       )
