@@ -2,6 +2,7 @@
 var mysql = require('mysql');
 var inquirer = require('inquirer')
 var cTable = require('console.table')
+colors = require('colors')
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -10,8 +11,12 @@ var connection = mysql.createConnection({
   password: "password",
   database: "bamazon"
 });
+console.log("------------------------".blue)
+console.log("Welcome To Bamazon!".red)
+console.log("------------------------\n".blue)
 
 function mainMenu()  {
+
   inquirer
     .prompt([
       {
@@ -36,9 +41,10 @@ function mainMenu()  {
           addProduct();
           break;
         case "EXIT":
+          console.log("See you next time".rainbow)
           connection.end()
           break;
-        default: console.log("Error most likely my bad")
+        default: console.log("Error most likely my bad".red)
       }
     })
 
@@ -52,13 +58,8 @@ function viewProducts() {
   connection.query("SELECT item_id, product_name, price, stock_quantity FROM products",
     function (err, results) {
       if (err) throw err;
-      console.table("Products For Sale", results)
-      // for (let i = 0; i < results.length; i++) {
-        // console.log("------------------------------------------------");
-
-        // console.log(results[i].item_id + " | " + results[i].product_name + " | Price: $" + results[i].price + " | Amount: " + results[i].stock_quantity + " |")
-      // }
-      // console.log("------------------------------------------------")
+      console.table("\nProducts For Sale\n".yellow, results)
+ 
       mainMenu();
     })
 }
@@ -71,7 +72,7 @@ function lowInventory() {
   connection.query(" SELECT item_id, product_name, price, stock_quantity FROM products WHERE stock_quantity < 3",
     function (err, results) {
       if (err) throw err;
-     console.table("Low Inventory Items", results)
+     console.table("\nLow Inventory Items\n".yellow, results)
       mainMenu();
     })
 }
@@ -90,7 +91,7 @@ function addInventory() {
       .prompt([
         {
           type: "list",
-          message: "Which product inventory would you like to add to?",
+          message: "Which product inventory would you like to add to?".cyan,
           choices: choicesArray,
           name: "itemChoice"
         }
@@ -104,13 +105,13 @@ function addInventory() {
             .prompt([
               {
                 type: "number",
-                message: "What you like to change the quantity to?",
+                message: "What you like to change the quantity to?".cyan,
                 name: "quantity"
               }
             ])
             .then(function (response) {
               var amount = response.quantity;
-              console.log("Updating product: " + firstResponse.itemChoice + " quantitiy from: " + res[0].stock_quantity + " to: " + amount)
+              console.log("Updating product: ".yellow + firstResponse.itemChoice + " quantitiy from: ".yellow + res[0].stock_quantity + " to: " + amount)
               connection.query("UPDATE products SET ? WHERE ?", [
                 {
                   stock_quantity: amount
@@ -122,7 +123,7 @@ function addInventory() {
                 function (err, res) {
                   console.log(res.message)
                 if (err) throw err;
-                console.log("Product quantitiy successfully updated to " + amount + "\n" + res.message);
+                console.log("Product quantitiy successfully updated to ".green + amount + "\n" + res.message);
                 mainMenu();
               })
             })
@@ -145,22 +146,22 @@ function addProduct () {
   .prompt([
     {
       type: "input",
-      message: "What is the product name?",
+      message: "What is the product name?".magenta,
       name: "productname"
     },
     {
       type: "input",
-      message: "What department does this product belong in?",
+      message: "What department does this product belong in?".magenta,
       name: "department"
     },
     {
       type: "number",
-      message: "What is the price of this product?",
+      message: "What is the price of this product?".magenta,
       name: "price"
     },
     {
       type: "number",
-      message: "What is the quantity of this product?",
+      message: "What is the quantity of this product?".magenta,
       name: "quantity"
     }
   ])
@@ -176,7 +177,7 @@ function addProduct () {
         },
         function(err, res){
           if(err) throw err;
-          console.log("Product successfully added to inventory")
+          console.log("Product successfully added to inventory".green)
           console.log(res.affectedRows + " rows affected")
           mainMenu()
         }

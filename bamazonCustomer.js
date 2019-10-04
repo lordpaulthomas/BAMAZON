@@ -14,11 +14,14 @@ connection.connect(function (err) {
   main();
 })
 function main() {
+  console.log("------------------------".blue)
+  console.log("Welcome To Bamazon!".red)
+  console.log("------------------------\n".blue)
   inquirer
   .prompt([
     {
       type: "confirm",
-      message: "Would yo like to make a purchase?",
+      message: "Would yo like to make a purchase?".cyan,
       name: "start"
     }
   ])
@@ -27,7 +30,7 @@ function main() {
       chooseItem();
     }
     else {
-      console.log("See you next time!")
+      console.log("See you next time!".rainbow)
       connection.end();
     }
   })
@@ -47,7 +50,7 @@ function chooseItem() {
       .prompt([
         {
           type: "list",
-          message: "What product would you like to purchase?",
+          message: "What product would you like to purchase?".cyan,
           choices: choicesArray,
           name: 'productChoice'
         }
@@ -73,7 +76,7 @@ function purchase(id) {
     .prompt([
       {
         type: 'number',
-        message: 'How many units would you like to buy?',
+        message: 'How many units would you like to buy?'.cyan,
         name: 'units'
       }
     ])
@@ -88,13 +91,13 @@ function purchase(id) {
           if (id === results[i].item_id) {
             console.log(results[i].product_name);
             if (quantity > results[i].stock_quantity) {
-              console.log("Insufficient quantity!")
+              console.log("Insufficient quantity!".red)
               main()
             }
             else {
               newQuantity = results[i].stock_quantity - quantity;
               price = quantity * results[i].price;
-              console.log("Your total purchase is $" + price)
+              console.log("Your total purchase is $".yellow + price)
               fulfillPurchase(id, newQuantity, price)
             }
           }
@@ -112,7 +115,7 @@ function fulfillPurchase(num, quantity, price) {
   connection.query("UPDATE products SET stock_quantity = ?, product_sales = ? WHERE item_id = ?", [quantity, price, num],
     function (err, res) {
       if (err) throw err;
-      console.log("Quantity updated\n")
+      console.log("Quantity updated\n".green)
       main()
     }
   );

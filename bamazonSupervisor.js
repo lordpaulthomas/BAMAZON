@@ -1,6 +1,7 @@
 var mysql = require('mysql');
 var inquirer = require('inquirer')
 var cTable = require('console.table')
+colors = require("colors")
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -12,7 +13,9 @@ var connection = mysql.createConnection({
 
 
 function mainMenu () {
-
+  console.log("------------------------".blue)
+  console.log("Welcome To Bamazon!".red)
+  console.log("------------------------\n".blue)
 
   inquirer
   .prompt([{
@@ -30,10 +33,10 @@ function mainMenu () {
         newDepartment()
         break;
       case "EXIT":
-        console.log("Goody Bye!")
+        console.log("Goody Bye!".rainbow)
         connection.end();
         break;
-      default: console.log("my bad")
+      default: console.log("my bad".red)
     }
   })
   .catch(function(error){
@@ -46,7 +49,7 @@ function viewByDepartment(){
     "SELECT department_id, departments.department_name, product_sales,overhead_cost, products.product_sales-departments.overhead_cost as TotalProfit FROM departments Left JOIN products ON departments.department_name=products.department_name ORDER BY department_id ASC",
     function(err, results){
       if (err) throw err;
-      console.table(results);
+      console.table("Departments".yellow,results);
       mainMenu()
     }
   )
@@ -74,7 +77,7 @@ function newDepartment() {
       }],
       function(err,results){
         if (err) throw err
-        console.log("Department Succesfully Added!")
+        console.log("Department Succesfully Added!".green)
         console.log(results.affectedRows + " row(s) affected") 
         mainMenu();
       }
