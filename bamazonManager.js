@@ -41,7 +41,7 @@ function mainMenu()  {
           addProduct();
           break;
         case "EXIT":
-          console.log("See you next time".rainbow)
+          console.log("\nSee you next time\n".rainbow)
           connection.end()
           break;
         default: console.log("Error most likely my bad".red)

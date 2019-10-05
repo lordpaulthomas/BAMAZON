@@ -13,15 +13,18 @@ connection.connect(function (err) {
   if (err) throw err;
   main();
 })
+
+console.log("------------------------".blue)
+console.log("Welcome To Bamazon!".red)
+console.log("------------------------\n".blue)
+
 function main() {
-  console.log("------------------------".blue)
-  console.log("Welcome To Bamazon!".red)
-  console.log("------------------------\n".blue)
+
   inquirer
   .prompt([
     {
       type: "confirm",
-      message: "Would yo like to make a purchase?".cyan,
+      message: "Would you like to make a purchase?".cyan,
       name: "start"
     }
   ])
@@ -30,7 +33,7 @@ function main() {
       chooseItem();
     }
     else {
-      console.log("See you next time!".rainbow)
+      console.log("\nSee you next time!\n".rainbow)
       connection.end();
     }
   })

@@ -11,11 +11,11 @@ var connection = mysql.createConnection({
   database: "bamazon"
 });
 
+console.log("------------------------".blue)
+console.log("Welcome To Bamazon!".red)
+console.log("------------------------\n".blue)
 
 function mainMenu () {
-  console.log("------------------------".blue)
-  console.log("Welcome To Bamazon!".red)
-  console.log("------------------------\n".blue)
 
   inquirer
   .prompt([{
@@ -33,7 +33,7 @@ function mainMenu () {
         newDepartment()
         break;
       case "EXIT":
-        console.log("Goody Bye!".rainbow)
+        console.log("\nGoody Bye!\n".rainbow)
         connection.end();
         break;
       default: console.log("my bad".red)
@@ -49,7 +49,7 @@ function viewByDepartment(){
     "SELECT department_id, departments.department_name, product_sales,overhead_cost, products.product_sales-departments.overhead_cost as TotalProfit FROM departments Left JOIN products ON departments.department_name=products.department_name ORDER BY department_id ASC",
     function(err, results){
       if (err) throw err;
-      console.table("Departments".yellow,results);
+      console.table(results);
       mainMenu()
     }
   )
@@ -86,7 +86,5 @@ function newDepartment() {
   .catch(function(error){
     if (error) return error;
   })
-
-
 }
 mainMenu()
