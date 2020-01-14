@@ -48,6 +48,22 @@ Requirements
 ---------------
 Both Node.js and MySQL are required to run this program.
 
+Installation
+-------
+Clone repository to desired folder
+```git clone https://github.com/lordpaulthomas/BAMAZON.git```
+Navigate into cloned directory
+```cd BAMAZAON/```
+Install all node dependencies
+```npm install```
+-----
+- To use system as Customer enter:
+```node bamazonCustomer.js```
+- To use system as Manager enter:
+```node bamazonManager```
+- To use system as Supervisor enter:
+```node bamazonSupervisor.js```
+------
 Required node_modules
 ---------------------
 ``` mysql ```
