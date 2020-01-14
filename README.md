@@ -51,11 +51,18 @@ Both Node.js and MySQL are required to run this program.
 Installation
 -------
 Clone repository to desired folder
+
 ```git clone https://github.com/lordpaulthomas/BAMAZON.git```
+
 Navigate into cloned directory
+
 ```cd BAMAZAON/```
+
 Install all node dependencies
+
 ```npm install```
+
+Usage:
 -----
 - To use system as Customer enter:
 ```node bamazonCustomer.js```
