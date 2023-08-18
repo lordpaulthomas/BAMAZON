@@ -35,7 +35,7 @@ package.json
 
 Description of BAMAZON
 -----------
-BAMAZON is a faux marketplace that useds both **Node.js** and a  **MySQL** database to create, read, update inventory.  This app has three javascript files that interact with 
+BAMAZON is a faux marketplace that uses both **Node.js** and a  **MySQL** database to create, read, update inventory.  This app has three javascript files that interact with 
 the database:
 
 * A Customer file that can make purchases.
